@@ -94,6 +94,6 @@
 <div align="center">
 
 
-  Made with 💙 by [L1ght](https://github.com/lightld)
+  Made with 💙 by [L1ght](https://github.com/l1ghtld)
 
 </div>
