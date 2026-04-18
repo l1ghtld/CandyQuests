@@ -1,0 +1,16 @@
+name: CandyQuests
+version: 1.2
+main: ru.light.CandyQuests
+api-version: '1.16'
+softdepend: [PlaceholderAPI]
+commands:
+  quest:
+  quest1:
+  quest2:
+  quest3:
+  skipquest:
+permissions:
+  quests.admin:
+    default: op
+  quests.skipquest:
+    default: false

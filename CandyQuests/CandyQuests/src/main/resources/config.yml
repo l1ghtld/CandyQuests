@@ -1,0 +1,206 @@
+# * # * # * # * # * #
+# t.me/lightdevlogs
+# ds - l1ghtld
+# * # * # * # * # * #
+#
+# Спасибо за покупку ❤
+#
+# * # * # * # * # * #
+#  Основные команды для игроков:
+#  /quest - открывает меню актуальных квестов
+#  /quest1 - открывает меню квестов первого уровня
+#  /quest2 - открывает меню квестов второго уровня
+#  /quest3 - открывает меню квестов третьего уровня
+#  /skipquest <номер> - пропустить квест (требуется подписка RW+)
+#
+#  Админ команды:
+#  /quest admin help - показать все админ команды
+#  /quest admin reset all_quests - обновить все квесты
+#  /quest admin reset all_rewards - удалить все награды
+#  /quest admin reward add <уровень> command <линия> <команда> - добавить команду для выдачи
+#  /quest admin reward remove <уровень> <линия> - удалить награду
+#  /quest admin skip all_quests <1|2|3> - скипнуть все квесты уровня
+#
+#  Пермишены:
+#  quests.admin - доступ к админ командам
+#  quests.skipquest - возможность пропускать квесты (подписка RW+)
+# * # * # * # * # * #
+
+database:
+  type: "sqlite"
+  sqlite:
+    file: "quest.db"
+
+settings:
+  level: 3
+  
+  status:
+    completed: "&aВыполнено"
+    not_completed: "&cНе выполнено"
+  
+  menu:
+    names:
+      1: "§fꈁꀃ&r"
+      2: "§fꈁꀃ&r&r"
+      3: "§fꈁꀃ&r&r&r"
+    
+    quests_settings:
+      quests: "0-44"
+      rewards: "8,17,26,35,44"
+    
+    barrier:
+      material: "BARRIER"
+      name: "&c&lНЕДОСТУПНО"
+      lore:
+        - "&cДля начала выполните"
+        - "&cпредыдущие задания"
+    
+    pass_quest:
+      name: "&6%material%"
+      lore:
+        - "&7Для выполнения данного квеста"
+        - "&7Вам нужно принести "
+        - "&6%material%"
+        - ""
+        - "&7Прогресс: &6%passed%&7/&6%necessary%"
+        - "&7Статус: %status%"
+        - ""
+        - "&7Вы можете пропустить квест c помощью &6RW+"
+        - "%candyquests_quest_status_%number_quest%%"
+    
+    craft_quest:
+      name: "&6%material%"
+      lore:
+        - "&7Для выполнения данного квеста"
+        - "&7Вам нужно скрафтить "
+        - "&6%material%"
+        - ""
+        - "&7Прогресс: &6%passed%&7/&6%necessary%"
+        - "&7Статус: %status%"
+        - ""
+        - "&7Вы можете пропустить квест c помощью &6RW+"
+        - "%candyquests_quest_status_%number_quest%%"
+    
+    place_block_quest:
+      name: "&6%material%"
+      lore:
+        - "&7Для выполнения данного квеста"
+        - "&7Вам нужно поставить "
+        - "&6%material%"
+        - ""
+        - "&7Прогресс: &6%passed%&7/&6%necessary%"
+        - "&7Статус: %status%"
+        - ""
+        - "&7Вы можете пропустить квест c помощью &6RW+"
+        - "%candyquests_quest_status_%number_quest%%"
+    
+    breaking_quest:
+      name: "&6%material%"
+      lore:
+        - "&7Для выполнения данного квеста"
+        - "&7Вам нужно сломать "
+        - "&6%material%"
+        - ""
+        - "&7Прогресс: &6%passed%&7/&6%necessary%"
+        - "&7Статус: %status%"
+        - ""
+        - "&7Вы можете пропустить квест c помощью &6RW+"
+        - "%candyquests_quest_status_%number_quest%%"
+    
+    kill_quest:
+      name: "&6Вам нужно убить: &6%whom%"
+      lore:
+        - "&7Для выполнения данного квеста"
+        - "&7Вам нужно убить "
+        - "&6%whom%"
+        - ""
+        - "&7Прогресс: &6%passed%&7/&6%necessary%"
+        - "&7Статус: %status%"
+        - ""
+        - "&7Вы можете пропустить квест c помощью &6RW+"
+        - "%candyquests_quest_status_%number_quest%%"
+    
+    rewards_title:
+      name: "&b&lНаграда"
+      lore: "%rewards_status%"
+      status:
+        completed: "&aНажмите, чтобы забрать свой приз"
+        need_to_go: "&cПройдите этап, чтобы получить награду"
+        passed: "&aВы уже получили награду!"
+      reward_item_konec:
+        1: "PINK_SHULKER_BOX"
+        2: "LIME_SHULKER_BOX"
+        3: "YELLOW_SHULKER_BOX"
+        4: "LIGHT_BLUE_SHULKER_BOX"
+        5: "PURPLE_SHULKER_BOX"
+
+messages:
+  skipquest:
+    skipped:
+      - "&6┌"
+      - "&6&l| &6ЗАДАНИЕ ВЫПОЛНЕНО!"
+      - "&6&l| &fСледующее задание разблокировано"
+      - "&6&l| &fПодробнее - &6/quest"
+      - "&6└"
+    skip_error: "&6Квесты &7» &cВы исчерпали лимит пропусков!"
+    no_subscription: "&6Квесты &7» &cУ вас нет подписки &6RW+"
+    next_quest_skip_error: "&6Квесты &7» &cВы не можете пропустить квест до которого не дошли!"
+  
+  quests:
+    completed:
+      - "&6┌"
+      - "&6&l| &6ЗАДАНИЕ ВЫПОЛНЕНО!"
+      - "&6&l| &fСледующее задание разблокировано"
+      - "&6&l| &fПодробнее - &6/quest"
+      - "&6└"
+    passed: "&6Квесты &7» &cВы уже прошли данный квест!"
+  
+  rewards:
+    completed:
+      - "&6┌"
+      - "&6&l| &6НАГРАДА ПОЛУЧЕНА!"
+      - "&6&l| &fСледующий этап разблокирован"
+      - "&6&l| &fПодробнее - &6/quest"
+      - "&6└"
+    need_to_go: "&6Джамшут &7» &cВыполните этап, чтобы получить награду"
+    passed: "&6Джамшут &7» &cВы уже получили эту награду!"
+    no_item_in_hand: "&6Награды &7» &cУ вас в руке ничего нет!"
+  
+  quests_menu:
+    error: "&6Квесты &7» &cТы еще не готов к этим квестам."
+  
+  admins:
+    help:
+      - ""
+      - "&fКвесты - Помощь"
+      - "&6/quest admin help &7- Вывод использования всех команд"
+      - "&6/quest admin reward add <уровень> command <линия> <команда> &7- Добавить команду"
+      - "&7Пример: &6/quest admin reward add 1 command 1 case give %player% jamshut"
+      - "&6/quest admin reward remove <уровень> <линия> &7- Удалить награду"
+      - "&6/quest admin reset all_quests &7- Сбросить все квесты и обновить их"
+      - "&6/quest admin reset all_rewards &7- Сбросить все награды"
+      - "&6/quest admin skip all_quests <1|2|3> &7- Скипнуть квест конкретного уровня"
+      - ""
+    no_perms: "&6Квесты &7» &cУ вас нет прав!"
+    reseted_all_quests: "&6Квесты &7» &fКвесты обновлены."
+    reseted_all_rewards: "&6Квесты &7» &fВсе награды удалены."
+    reward_added: "&6Квесты &7» &fНаграда добавлена."
+    reward_removed: "&6Квесты &7» &fНаграда удалена."
+  
+  commands:
+    invalid_command: "&6Квесты &7» &f/skipquest <Номер>"
+    usage_skipquest: "&6Квесты &7» &f/skipquest <номер>"
+    invalid_quest_number: "&6Квесты &7» &cНеверный номер квеста!"
+    quest_not_found: "&6Квесты &7» &fКвест с таким номером не найден!"
+    help_quest_add: "&6Квесты &7» &f/quest admin reward add <уровень> command <линия> <команда>"
+    help_quest_add_command: "&6Квесты &7» &f/quest admin reward add <уровень> command <линия> <команда>"
+    quest_remove: "&6Квесты &7» &f/quest admin reward remove <уровень> <линия>"
+    quest_reward: "&6Квесты &7» &f/quest admin reward <add|remove> ..."
+    quest_reset: "&6Квесты &7» &f/quest admin reset <all_quests|all_rewards>"
+    unkown_number: "&6Квесты &7» &fВы указали неверный материал"
+    take_item_in_hand: "&6Квесты &7» &fВозьмите предмет в руку!"
+    skip_all_usage: "&6Квесты &7» &f/quest admin skip all_quests <1|2|3>"
+    skip_all_success: "&6Квесты &7» &fВы пропустили все квесты уровня %level%."
+    skip_all_unknown_level: "&6Квесты &7» &fНеизвестный уровень квеста!"
+    skip_all_quests_ready: "&6Квесты &7» &cВы уже пропустили этот уровень квестов!"
+
